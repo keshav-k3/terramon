@@ -158,16 +158,43 @@ Before hitting that apply button, make sure:
 
 ---
 
-## 🤝 Contributing
+---
 
-Follow these guidelines and your infrastructure will be:
-- 🔒 **Secure** by default
-- 📈 **Scalable** and maintainable  
-- 🎯 **Consistent** across environments
-- 📖 **Well-documented** and clear
+## 📚 Standards Compliance
 
-Remember: These rules aren't just suggestions—they're your infrastructure's best friends! 🚀
+These guidelines are compiled from official best practices established by industry leaders:
+
+### 🏢 **HashiCorp Official Recommendations**
+- Collaborative Infrastructure as Code workflows using Terraform as core workflow
+- Four stages of operational maturity for enterprise adoption
+- Consistent code style with `terraform fmt` and `terraform validate`
+- Workspace management with minimal blast radius
+- Policy enforcement through HCP Terraform governance
+
+### ☁️ **AWS Prescriptive Guidance**
+- Infrastructure code quality and consistency across Terraform projects
+- Accelerated developer onboarding and contribution capabilities  
+- Increased business agility through faster infrastructure changes
+- Reduced errors and downtime in infrastructure deployments
+- Optimized infrastructure costs and strengthened security posture
+
+### 🔥 **Firefly IaC Best Practices Guide**
+- Consistent, descriptive naming conventions for improved debugging and collaboration
+- Standardized directory layouts for clarity, scalability, and efficiency
+- Reusable modules that bundle common configurations for streamlined management
+- Remote state storage, locking, backups, and access controls to prevent disasters
+- Robust version control practices enabling rollbacks and audit trails
+- CI/CD pipeline integration for automated validation, testing, and deployment
+- Proactive security and governance measures with early vulnerability detection
+
+### 🎯 **Enterprise Outcomes**
+Following these practices delivers:
+- 🔒 **Secure** infrastructure by default
+- 📈 **Scalable** and maintainable deployments
+- 🎯 **Consistent** environments across dev/staging/prod
+- 📖 **Well-documented** and team-accessible code
+- 🚀 **Faster** development cycles with reduced risk
 
 ---
 
-*Built with ❤️ using Terraform best practices*
+*Compiled from HashiCorp Developer Documentation, AWS Prescriptive Guidance, Firefly IaC Best Practices Guide, and enterprise Infrastructure as Code standards*
