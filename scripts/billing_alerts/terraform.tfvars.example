@@ -1,0 +1,8 @@
+# Copy this file to terraform.tfvars and fill in your actual values
+
+# Webhook URL for billing notifications
+# Examples:
+# Slack: https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
+# Teams: https://your-tenant.webhook.office.com/webhookb2/YOUR/TEAMS/WEBHOOK
+# Discord: https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
+webhook_url = "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
