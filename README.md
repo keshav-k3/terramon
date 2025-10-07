@@ -1,61 +1,63 @@
-# 🏗️ Terramon - Terraform Infrastructure Guidelines
+# Terramon - Terraform Infrastructure Guidelines
 
-Welcome to **Terramon**! 🎯 Your comprehensive guide to building secure, scalable, and maintainable infrastructure with Terraform.
+Enterprise-grade Terraform best practices for building secure, scalable, and maintainable infrastructure.
 
-## 🚀 Quick Start
+## Quick Start
 
-This project follows enterprise-grade Terraform best practices to ensure your infrastructure is bulletproof and follows industry standards.
+### Prerequisites
 
-### 📋 Prerequisites
+- **Required MCP Server**: `hashicorp/terraform-mcp-server` for comprehensive Terraform provider access
+- Terraform >= 1.5.0
+- AWS Provider ~> 5.0
 
-- 🔧 **Required MCP Server**: `hashicorp/terraform-mcp-server` for comprehensive Terraform provider access
-- 🌱 Terraform >= 1.5.0
-- ☁️ AWS Provider ~> 5.0
+## Core Principles
 
-## 🎯 Core Principles
+### 1. Naming Conventions
 
-### 1. 📝 Naming That Makes Sense
-We follow crystal-clear naming conventions:
-- ✅ Use underscores (never dashes!)
-- 🏷️ Include environment prefixes: `prod_`, `dev_`, `staging_`
-- 📖 Be descriptive about purpose
-- 🔒 Never include secrets in names
+Follow consistent naming standards:
+- Use underscores (never dashes)
+- Include environment prefixes: `prod_`, `dev_`, `staging_`
+- Be descriptive about purpose
+- Never include secrets in names
 
 ```hcl
-# ✅ Perfect naming
+# Example
 resource "aws_instance" "prod_web_server" {
-  # Your awesome config here
+  # Configuration
 }
 ```
 
-### 2. 📂 Directory Structure That Works
-Keep everything organized with our battle-tested structure:
+### 2. Directory Structure
+
+Standard project layout:
 
 ```
 terraform-project/
-├── 🏠 main.tf              # Your main resources
-├── 🔧 variables.tf         # Variable definitions  
-├── 📤 outputs.tf          # What you want to share
-├── 🔌 providers.tf        # Provider magic
-├── 📋 terraform.tfvars   # Values (gitignored!)
-├── 📌 versions.tf         # Version constraints
-├── 📖 README.md           # This beautiful file
-├── 🌍 environments/       # Per-environment configs
-└── 🧩 modules/            # Reusable components
+├── main.tf              # Main resources
+├── variables.tf         # Variable definitions
+├── outputs.tf           # Output values
+├── providers.tf         # Provider configuration
+├── terraform.tfvars     # Values (gitignored)
+├── versions.tf          # Version constraints
+├── README.md            # Documentation
+├── environments/        # Per-environment configs
+└── modules/             # Reusable components
 ```
 
-### 3. 🧩 Smart Modularization
-Create modules when you have:
-- 🔄 Resources used across environments
-- 🎯 Complex configurations (3+ interconnected resources)  
-- 🔐 Standardized security patterns
+### 3. Modularization
 
-### 4. 💾 State Management (Critical!)
+Create modules when you have:
+- Resources used across environments
+- Complex configurations (3+ interconnected resources)
+- Standardized security patterns
+
+### 4. State Management
+
 Never store state locally in production:
-- 🏠 Always use remote backend (S3 + DynamoDB)
-- 🔒 Always encrypt state
-- 🔐 Always enable state locking
-- 📁 Separate state files per environment
+- Always use remote backend (S3 + DynamoDB)
+- Always encrypt state
+- Always enable state locking
+- Separate state files per environment
 
 ```hcl
 terraform {
@@ -69,34 +71,37 @@ terraform {
 }
 ```
 
-## 🛡️ Security First
+## Security First
 
-### 🔐 Golden Security Rules
-- ❌ **NEVER** hardcode credentials
-- ✅ **ALWAYS** use IAM roles over access keys
-- 🎯 **ALWAYS** implement least privilege
-- 🔒 **ALWAYS** encrypt data at rest and in transit
-- 📦 **ALWAYS** use current provider versions
+### Security Rules
 
-### 🏷️ Tagging Strategy
-Every resource gets these mandatory tags:
-- 🌍 Environment
-- 📋 Project  
-- 🤖 ManagedBy (always "terraform")
-- 👤 Owner
-- 💰 CostCenter
-- 📅 CreatedDate
+- **NEVER** hardcode credentials
+- **ALWAYS** use IAM roles over access keys
+- **ALWAYS** implement least privilege
+- **ALWAYS** encrypt data at rest and in transit
+- **ALWAYS** use current provider versions
 
-## 🔍 Validation & Quality
+### Tagging Strategy
 
-### ✅ Input Validation
-We validate everything:
+Required tags for every resource:
+- Environment
+- Project
+- ManagedBy (always "terraform")
+- Owner
+- CostCenter
+- CreatedDate
+
+## Validation & Quality
+
+### Input Validation
+
+Validate all inputs:
 
 ```hcl
 variable "environment" {
   description = "Environment name"
   type        = string
-  
+
   validation {
     condition     = contains(["dev", "staging", "prod"], var.environment)
     error_message = "Environment must be dev, staging, or prod."
@@ -104,81 +109,81 @@ variable "environment" {
 }
 ```
 
-### 🚦 Security Groups Done Right
-- 🚫 Never use `0.0.0.0/0` for ingress unless absolutely necessary
-- 📝 Always add descriptions
-- 🔗 Use security group references over CIDR blocks
-- 🎯 Implement least privilege access
+### Security Groups
 
-## 🚀 Quick Commands
+- Never use `0.0.0.0/0` for ingress unless absolutely necessary
+- Always add descriptions
+- Use security group references over CIDR blocks
+- Implement least privilege access
+
+## Quick Commands
 
 ```bash
-# 🏁 Initialize and validate
+# Initialize and validate
 terraform init
 terraform validate
 terraform fmt -recursive
 
-# 📋 Plan and apply
+# Plan and apply
 terraform plan -var-file="environments/dev/terraform.tfvars"
 terraform apply -var-file="environments/dev/terraform.tfvars"
 
-# 🔍 State operations
+# State operations
 terraform state list
 terraform state show <resource>
 
-# 🧹 Cleanup
+# Cleanup
 terraform destroy -var-file="environments/dev/terraform.tfvars"
 ```
 
-## ✅ Pre-Deployment Checklist
+## Pre-Deployment Checklist
 
-Before hitting that apply button, make sure:
+- [ ] All resources follow naming conventions
+- [ ] Directory structure is organized
+- [ ] Remote state backend configured
+- [ ] Sensitive data is secured
+- [ ] Input validation implemented
+- [ ] Output values defined
+- [ ] Security groups follow least privilege
+- [ ] All resources tagged properly
+- [ ] Version constraints specified
+- [ ] Code formatted (`terraform fmt`)
+- [ ] Configuration validated (`terraform validate`)
+- [ ] Plan reviewed (`terraform plan`)
 
-- [ ] 📝 All resources follow naming conventions
-- [ ] 📂 Directory structure is organized
-- [ ] 💾 Remote state backend configured
-- [ ] 🔒 Sensitive data is secured
-- [ ] ✅ Input validation implemented
-- [ ] 📤 Output values defined
-- [ ] 🛡️ Security groups follow least privilege
-- [ ] 🏷️ All resources tagged properly
-- [ ] 📌 Version constraints specified
-- [ ] 🎨 Code formatted (`terraform fmt`)
-- [ ] ✅ Configuration validated (`terraform validate`)
-- [ ] 📋 Plan reviewed (`terraform plan`)
+## Git Workflow
 
-## 🎯 Git Workflow
-
-- 🌟 Always use feature branches
-- 👥 Require pull request reviews
-- 🤖 Run `terraform plan` in CI
-- ✨ Format and validate before commit
-- 🚫 Never commit `.tfvars` with secrets
-- 📋 Use `.gitignore` for sensitive files
+- Always use feature branches
+- Require pull request reviews
+- Run `terraform plan` in CI
+- Format and validate before commit
+- Never commit `.tfvars` with secrets
+- Use `.gitignore` for sensitive files
 
 ---
 
----
-
-## 📚 Standards Compliance
+## Standards Compliance
 
 These guidelines are compiled from official best practices established by industry leaders:
 
-### 🏢 **HashiCorp Official Recommendations**
+### HashiCorp Official Recommendations
+
 - Collaborative Infrastructure as Code workflows using Terraform as core workflow
 - Four stages of operational maturity for enterprise adoption
 - Consistent code style with `terraform fmt` and `terraform validate`
 - Workspace management with minimal blast radius
 - Policy enforcement through HCP Terraform governance
 
-### ☁️ **AWS Prescriptive Guidance**
+### AWS Prescriptive Guidance
+
 - Infrastructure code quality and consistency across Terraform projects
-- Accelerated developer onboarding and contribution capabilities  
+- Accelerated developer onboarding and contribution capabilities
 - Increased business agility through faster infrastructure changes
 - Reduced errors and downtime in infrastructure deployments
 - Optimized infrastructure costs and strengthened security posture
 
-### 🔥 **Firefly IaC Best Practices Guide**
+### Firefly IaC Best Practices Guide
+
 - Consistent, descriptive naming conventions for improved debugging and collaboration
 - Standardized directory layouts for clarity, scalability, and efficiency
 - Reusable modules that bundle common configurations for streamlined management
@@ -187,13 +192,14 @@ These guidelines are compiled from official best practices established by indust
 - CI/CD pipeline integration for automated validation, testing, and deployment
 - Proactive security and governance measures with early vulnerability detection
 
-### 🎯 **Enterprise Outcomes**
+### Enterprise Outcomes
+
 Following these practices delivers:
-- 🔒 **Secure** infrastructure by default
-- 📈 **Scalable** and maintainable deployments
-- 🎯 **Consistent** environments across dev/staging/prod
-- 📖 **Well-documented** and team-accessible code
-- 🚀 **Faster** development cycles with reduced risk
+- Secure infrastructure by default
+- Scalable and maintainable deployments
+- Consistent environments across dev/staging/prod
+- Well-documented and team-accessible code
+- Faster development cycles with reduced risk
 
 ---
 
