@@ -27,7 +27,6 @@ EC2 Instance (App + DB)
 ## Prerequisites
 - AWS CLI configured
 - Terraform installed (>= 1.0)
-- SSH key pair created in AWS (optional)
 
 ## Usage
 
